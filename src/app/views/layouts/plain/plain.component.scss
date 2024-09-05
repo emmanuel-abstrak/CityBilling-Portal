@@ -1,0 +1,18 @@
+.main-wrapper {
+    height: 100vh;
+}
+.radial-gradient {
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    background: radial-gradient(#d2f1df, #d3d7fa, #bad8f4) 0 0 / 400% 400%;
+    animation: 15s ease 0s infinite normal none running gradient;
+  }
+}
+.auth-max-width {
+  width: 100%;
+  max-width: 400px;
+}

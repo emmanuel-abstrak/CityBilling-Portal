@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
+
+// ------------------------------------
+// Variables
+// ------------------------------------
+@import "./../public/scss/variables/variables";
+@import "./../public/scss/variables/theme_variables";
+@import "./../public/scss/variables/variables-dark";
+
+// ------------------------------------
+// Themecolors
+// ------------------------------------
+@import "./../public/scss/variables/variables-blue";
+@import "./../public/scss/variables/variables-aqua";
+@import "./../public/scss/variables/variables-purple";
+@import "./../public/scss/variables/variables-green";
+@import "./../public/scss/variables/variables-cyan";
+@import "./../public/scss/variables/variables-orange";
+
+// Import Bootstrap source files (Required file)
+@import "./../node_modules/bootstrap/scss/bootstrap.scss";
+
+// ------------------------------------
+// Layouts
+// ------------------------------------
+@import "./../public/scss/layouts/layouts";
+@import "./../public/scss/layouts/sidebar";
+@import "./../public/scss/layouts/header";
+@import "./../public/scss/layouts/horizontal";
+@import "./../public/scss/layouts/customizer";
+@import "./../public/scss/layouts/spinner";
+
+// ------------------------------------
+// Components
+// ------------------------------------
+@import "./../public/scss/components/buttons";
+@import "./../public/scss/components/cards";
+@import "./../public/scss/components/dropdown-animation";
+
+// ------------------------------------
+// Utilities
+// ------------------------------------
+@import "./../public/scss/utilities/icon-size";
+@import "./../public/scss/utilities/icon-hover";
+@import "./../public/scss/utilities/background";
+@import "./../public/scss/utilities/override";
+
+// ------------------------------------
+// RTL
+// ------------------------------------
+@import "./../public/scss/layouts/rtl";
+
+// ------------------------------------
+// Vendors
+// ------------------------------------
+@import "./../public/scss/vendors/simplebar";
+
+// Tabler Icons style
+@import "./../public/fonts/tabler-icons/tabler-icons.css";

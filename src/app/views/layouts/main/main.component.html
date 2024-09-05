@@ -1,0 +1,12 @@
+
+<div id="main-wrapper" ngClass="{{ sidebarExpanded ? 'show-sidebar' : '' }}">
+    <app-sidebar />
+    <div class="page-wrapper">
+        <app-header (toggleCollapsed)="toggleSidebar($event)" />
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <router-outlet />
+            </div>
+        </div>
+    </div>
+</div>

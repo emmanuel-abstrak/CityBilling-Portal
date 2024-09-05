@@ -1,0 +1,44 @@
+<h2 class="mb-1 fs-7 fw-bolder">Login</h2>
+<p class="mb-7">Access the adminstration portal</p>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label class="form-label">Username / Email</label>
+        <input [readonly]="loading" type="email" formControlName="username" class="form-control" />
+        @if (submitted && f['username'].errors) {
+        <div class="invalid-feedback">
+            @if (f['username'].errors['required']) {
+            <div>Enter Username or Email</div>
+            }
+        </div>
+        }
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input [readonly]="loading" type="password" formControlName="password" class="form-control" autocomplete="new-password" />
+        @if (submitted && f['password'].errors) {
+        <div class="invalid-feedback">
+            @if (f['password'].errors['required']) {
+            <div>Enter Password</div>
+            }
+        </div>
+        }
+    </div>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="form-check">
+            <input [disabled]="loading" class="form-check-input primary" type="checkbox" value id="flexCheckChecked" checked>
+            <label class="form-check-label text-dark fs-3" for="flexCheckChecked">
+                Remember me
+            </label>
+        </div>
+        <a class="text-primary fw-medium fs-3" href="forgot-password">Forgot Password ?</a>
+    </div>
+    <button type="submit" [disabled]="loading" class="btn btn-primary w-100 py-8 mb-4 rounded-2">
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        <span>Log In</span>
+    </button>
+</form>

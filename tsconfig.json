@@ -1,10 +1,8 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -19,10 +17,19 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"],
+    "paths": {
+      "@environments/*": ["./src/environments/*"],
+      "@components/*": ["./src/app/views/components/*"],
+      "@views/*": ["./src/app/views/*"],
+      "@services/*": ["./src/app/services/*"],
+      "@states/*": ["./src/app/states/*"],
+      "@models/*": ["./src/app/models/*"],
+      "@guards/*": ["./src/app/guards/*"],
+      "@pipes/*": ["./src/app/pipes/*"],
+      "@helpers/*": ["./src/app/helpers/*"],
+      "@resolvers/*": ["./src/app/resolvers/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
