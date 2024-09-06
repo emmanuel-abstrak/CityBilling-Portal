@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://api.ejubox.local/api',
-    tokenStorageKey: "ejbx_token"
+    apiUrl: 'http://api.billing.local/api',
+    tokenStorageKey: "msvg_token"
 };

@@ -1,11 +1,10 @@
 export interface User {
     id: number;
+    userType: string;
     email: string;
-    name: string;
-    role: string;
-    photo: string;
-    school: {
-        id: number,
-        name: string
-    };
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    createdAt: string;
+    updateAt: string;
 }

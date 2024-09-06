@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthToken } from '../models/auth.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthState {
-    private stateItem: BehaviorSubject<AuthToken | null> = new BehaviorSubject(
+    private stateItem: BehaviorSubject<string | null> = new BehaviorSubject(
         null
     );
-    stateItem$: Observable<AuthToken | null> = this.stateItem.asObservable();
+    stateItem$: Observable<string | null> = this.stateItem.asObservable();
 
     get redirectUrl(): string {
         return localStorage.getItem('redirectUrl');
@@ -21,7 +20,7 @@ export class AuthState {
     constructor(
         private router: Router
     ) {
-        const _localToken: AuthToken = this._GetLocalToken();
+        const _localToken: string = this._GetLocalToken();
 
         if (this.CheckAuth(_localToken)) {
             this.SetState(_localToken);
@@ -30,36 +29,35 @@ export class AuthState {
         }
     }
 
-    SetState(item: AuthToken) {
+    SetState(item: string) {
         this.stateItem.next(item);
         return this.stateItem$;
     }
-    UpdateState(item: Partial<AuthToken>) {
-        const newItem = { ...this.stateItem.getValue(), ...item };
-        this.stateItem.next(newItem);
+    UpdateState(token: string) {
+        this.stateItem.next(token);
         return this.stateItem$;
     }
     RemoveState() {
         this.stateItem.next(null);
     }
 
-    private _SaveToken(token: AuthToken) {
-        localStorage.setItem(environment.tokenStorageKey, JSON.stringify(token));
+    private _SaveToken(token: string) {
+        localStorage.setItem(environment.tokenStorageKey, token);
     }
     private _RemoveToken() {
         localStorage.removeItem(environment.tokenStorageKey);
     }
 
-    private _GetLocalToken(): AuthToken | null {
-        const _token: AuthToken = JSON.parse(localStorage.getItem(environment.tokenStorageKey));
-        if (_token && _token.accessToken) {
-            return <AuthToken>_token;
+    private _GetLocalToken(): string | null {
+        const _token: string = localStorage.getItem(environment.tokenStorageKey);
+        if (_token) {
+            return _token;
         }
         return null;
     }
 
-    SaveSession(token: AuthToken): AuthToken | null {
-        if (token.accessToken) {
+    SaveSession(token: string): string | null {
+        if (token) {
             this._SaveToken(token);
             this.SetState(token);
             return token;
@@ -70,12 +68,9 @@ export class AuthState {
         }
     }
 
-    UpdateSession(token: AuthToken) {
-        const _localToken: AuthToken = this._GetLocalToken();
+    UpdateSession(token: string) {
+        const _localToken: string = this._GetLocalToken();
         if (_localToken) {
-            _localToken.accessToken = token.accessToken;
-            _localToken.refreshToken = token.refreshToken;
-
             this._SaveToken(_localToken);
             this.UpdateState(token);
         } else {
@@ -84,11 +79,8 @@ export class AuthState {
         }
     }
 
-    CheckAuth(token: AuthToken) {
-        if (!token || !token.accessToken) {
-            return false;
-        }
-        if (Date.now() > token.expiresAt) {
+    CheckAuth(token: string) {
+        if (!token) {
             return false;
         }
 
@@ -105,11 +97,7 @@ export class AuthState {
     }
 
     GetToken() {
-        const _auth = this.stateItem.getValue();
-        return this.CheckAuth(_auth) ? _auth.accessToken : null;
-    }
-    GetRefreshToken() {
-        const _auth = this.stateItem.getValue();
-        return this.CheckAuth(_auth) ? _auth.refreshToken : null;
+        const token = this.stateItem.getValue();
+        return this.CheckAuth(token) ? token : null;
     }
 }
