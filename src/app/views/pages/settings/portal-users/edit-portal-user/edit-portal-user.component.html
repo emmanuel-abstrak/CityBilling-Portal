@@ -1,0 +1,113 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editPortalUserCanvas" aria-labelledby="editPortalUserCanvasLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="editPortalUserCanvasLabel">
+            @if(user) {
+            <span>{{ user.firstName }} {{ user.lastName }}</span>
+            }
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mt-4">
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input [readonly]="loading" type="email" formControlName="email" class="form-control" />
+                    @if (submitted && f['email'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['email'].errors['required']) {
+                        <div>Email is required</div>
+                        }
+                        @if (f['email'].errors['email']) {
+                        <div>Enter valid Email</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input [readonly]="loading" type="text" formControlName="firstName" class="form-control" autocomplete="new-password" />
+                            @if (submitted && f['firstName'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['firstName'].errors['required']) {
+                                <div>First Name is required</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input [readonly]="loading" type="text" formControlName="lastName" class="form-control" autocomplete="new-password" />
+                            @if (submitted && f['lastName'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['lastName'].errors['required']) {
+                                <div>Last Name is required</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select2 class="forn-control" [placeholder]="'Select'" [data]="rolesList" [value]="selectedRole" (update)="onRoleSelect($event)"></select2>
+                            @if (submitted && f['role'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['role'].errors['required']) {
+                                <div>Role is required</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <select2 class="forn-control" [placeholder]="'Select'" [data]="genderList" [value]="selectedGender" (update)="onGenderSelect($event)"></select2>
+                            @if (submitted && f['gender'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['gender'].errors['required']) {
+                                <div>Gender is required</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input [readonly]="loading" type="tel" formControlName="phoneNumber" class="form-control" autocomplete="new-password" />
+                            @if (submitted && f['phoneNumber'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['phoneNumber'].errors['required']) {
+                                <div>Phone Number is required</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" [disabled]="loading" class="btn btn-primary w-100 py-8 mt-4 rounded-2">
+                            @if(loading) {
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            }
+                            <span>Update User</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

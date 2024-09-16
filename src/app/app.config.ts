@@ -1,12 +1,15 @@
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import { PreloadAllModules, provideRouter, withComponentInputBinding, withInMemoryScrolling, withPreloading } from '@angular/router';
 
 import { routes } from './app.routes';
-import { AuthService } from '@services/auth.service';
+import { AuthService } from '@services/api/auth.service';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppHttpInterceptor } from './interceptors/http.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -28,13 +31,17 @@ export const appConfig: ApplicationConfig = {
                 scrollPositionRestoration: 'enabled',
                 anchorScrolling: 'enabled',
             }),
-            withComponentInputBinding()
+            withComponentInputBinding(),
+            withPreloading(PreloadAllModules)
         ),
         provideHttpClient(withInterceptorsFromDi()),
         provideClientHydration(),
         importProvidersFrom(
             FormsModule,
-            ReactiveFormsModule
+            ReactiveFormsModule,
+            CommonModule,
         ),
+        provideAnimations(),
+        provideToastr(),
     ],
 };

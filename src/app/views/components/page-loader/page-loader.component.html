@@ -1,6 +1,10 @@
 @if(loading)
 {
 <div class="preloader">
-    <img src="images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <div class="d-flex justify-content-center align-items-center flex-column gap-3 w-100 h-100">
+        <div class="spinner-border spinner-border-lg border-4 text-primary" role="status">
+        </div>
+        <span class="text-dark fw-semibold">Please wait...</span>
+    </div>
 </div>
 }

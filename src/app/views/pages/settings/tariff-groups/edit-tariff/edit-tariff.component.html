@@ -1,0 +1,136 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editTariffGroupCanvas" aria-labelledby="editTariffGroupCanvas">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+            @if (tariff) {
+            <span>{{ tariff.suburb.name }} Tariff Group</span>
+            }
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mt-4">
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Min Size <span class="text-muted">(m<sup>2</sup>)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="minSize" class="form-control" />
+                            @if (submitted && f['minSize'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['minSize'].errors['required']) {
+                                <div>Enter min size</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Max Size <span class="text-muted">(m<sup>2</sup>)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="maxSize" class="form-control" />
+                            @if (submitted && f['maxSize'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['maxSize'].errors['required']) {
+                                <div>Enter max size</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Residential Rates <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="residentialRatesCharge" class="form-control" />
+                            @if (submitted && f['residentialRatesCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['residentialRatesCharge'].errors['required']) {
+                                <div>Enter residential rates</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Residential Refuse <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="residentialRefuseCharge" class="form-control" />
+                            @if (submitted && f['residentialRefuseCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['residentialRefuseCharge'].errors['required']) {
+                                <div>Enter residential refuse</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Residential Sewerage <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="residentialSewerageCharge" class="form-control" />
+                            @if (submitted && f['residentialSewerageCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['residentialSewerageCharge'].errors['required']) {
+                                <div>Enter residential sewerage</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Commercial Rates <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="commercialRatesCharge" class="form-control" />
+                            @if (submitted && f['commercialRatesCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['commercialRatesCharge'].errors['required']) {
+                                <div>Enter commercial rates</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Commercial Refuse <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="commercialRefuseCharge" class="form-control" />
+                            @if (submitted && f['commercialRefuseCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['commercialRefuseCharge'].errors['required']) {
+                                <div>Enter commercial refuse</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Commercial Sewerage <span class="text-muted">(USD)</span></label>
+                            <input [readonly]="loading" type="number" step="any" formControlName="commercialSewerageCharge" class="form-control" />
+                            @if (submitted && f['commercialSewerageCharge'].errors) {
+                            <div class="invalid-feedback">
+                                @if (f['commercialSewerageCharge'].errors['required']) {
+                                <div>Enter commercial sewerage</div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="offcanvas-header border-top">
+        <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary px-4">
+            @if(loading) {
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            }
+            <span>Save Tariff Group</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="search-filter d-flex align-items-center gap-3">
+        <select2 class="forn-control" [placeholder]="'Select'" [value]="selectedSuburb" [data]="suburbs" (update)="onSuburbSelect($event)"></select2>
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        @if(submitted && !loading && selectedSuburb) {
+        <button type="button" class="btn btn-link btn-sm px-0 text-danger" (click)="clearSearch()">Clear</button>
+        }
+    </div>
+    <div class="actions">
+        <a data-bs-toggle="offcanvas" data-bs-target="#addTariffGroupCanvas" aria-controls="addTariffGroupCanvas" class="btn btn-primary btn-sm">Add Tariff Group</a>
+    </div>
+</div>
+
+<div class="card card-body {{ loading ? 'content-loading' : '' }} py-0">
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap mb-3">
+            <thead>
+                <tr class="text-muted fw-semibold">
+                    <th scope="col" class="ps-0">Suburb</th>
+                    <th scope="col">Size (m<sup>2</sup>)</th>
+                    <th scope="col">Commercial</th>
+                    <th scope="col">Residential</th>
+                    <th scope="col" class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top">
+                @for (tariff of paginatedTariffGroups.items; track tariff) {
+                <tr>
+                    <td class="ps-0">
+                        <h6 class="fw-semibold mb-1">{{ tariff.suburb.name }}</h6>
+                    </td>
+                    <td>
+                        <p class="small mb-0 text-capitalize">
+                            {{ tariff.minSize }} - {{ tariff.maxSize }}
+                        </p>
+                    </td>
+                    <td>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Rates: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialRatesCharge }}</span>
+                        </p>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Sewer: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialSewerageCharge }}</span>
+                        </p>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Refuse: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialRefuseCharge }}</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Rates: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialRatesCharge }}</span>
+                        </p>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Sewer: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialSewerageCharge }}</span>
+                        </p>
+                        <p class="small mb-0 text-muted text-uppercase">
+                            <span class="t-label">Refuse: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialRefuseCharge }}</span>
+                        </p>
+                    </td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-dots-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu" style>
+                                <li>
+                                    <a (click)="changeSelectedTariff(tariff)" data-bs-toggle="offcanvas" data-bs-target="#editTariffGroupCanvas"
+                                        aria-controls="editTariffGroupCanvas" class="dropdown-item d-flex align-items-center gap-2 border-bottom pointer">
+                                        <span>
+                                            <i class="ti ti-edit fs-4"></i>
+                                        </span>Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a (click)="showConfirmDelete(tariff)" class="dropdown-item d-flex align-items-center text-danger gap-2 pointer">
+                                        <span>
+                                            <i class="ti ti-trash fs-4"></i>
+                                        </span>Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-pagination [pagination]="paginatedTariffGroups" (clickedPagination)="getTariffGroups({query: $event})"></app-pagination>
+
+<app-add-tariff [suburbList]="suburbAddSelectList" (tariffGroupAdded)="getTariffGroups({query: ''})" />
+<app-edit-tariff [tariffGroupSubject]="selectedTariffGroupSubject.asObservable()" (tariffGroupUpdated)="getTariffGroups({query: ''})" />

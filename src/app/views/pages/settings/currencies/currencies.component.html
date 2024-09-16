@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <form [formGroup]="searchForm" (ngSubmit)="doSearch()" class="search-filter d-flex align-items-center gap-3">
+        <div class="position-relative d-flex align-items-center">
+            <i class="ti ti-search position-absolute fw-bold me-n2 z-5 ms-2"></i>
+            <input type="text" formControlName="search" class="form-control form-control-sm ps-4" placeholder="Search code or symbol" />
+        </div>
+        <button type="submit" [disabled]="loading" class="btn search-btn btn-sm px-3">Search</button>
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        @if(submitted && !loading) {
+        <button type="button" class="btn btn-link btn-sm px-0 text-danger" (click)="clearSearch()">Clear</button>
+        }
+    </form>
+    <div class="actions">
+        <a data-bs-toggle="offcanvas" data-bs-target="#addCurrencyCanvas" aria-controls="addCurrencyCanvas" class="btn btn-primary btn-sm">Add Currency</a>
+    </div>
+</div>
+
+<div class="card card-body {{ loading ? 'content-loading' : '' }} py-0">
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap mb-3">
+            <thead>
+                <tr class="text-muted fw-semibold">
+                    <th scope="col" class="ps-0">Currency</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col" class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top">
+                @for (currency of paginatedCurrencies.items; track currency) {
+                <tr>
+                    <td class="ps-0">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h6 class="fw-semibold mb-1">{{ currency.code }}</h6>
+                                <p class="fs-2 mb-0 text-muted text-capitalize">
+                                    {{ currency.symbol }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <h6 class="fw-semibold mb-1">{{ currency.exchangeRate }}</h6>
+                    </td>
+                    <td>
+                        <h6 class="fw-semibold mb-1">{{ currency.createdAt }}</h6>
+                    </td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-dots-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu" style>
+                                <li>
+                                    <a (click)="changeSelectedCurrency(currency)" data-bs-toggle="offcanvas" data-bs-target="#editCurrencyCanvas"
+                                        aria-controls="editCurrencyCanvas" class="dropdown-item d-flex align-items-center gap-2 border-bottom pointer">
+                                        <span>
+                                            <i class="ti ti-edit fs-4"></i>
+                                        </span>Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a (click)="showConfirmDelete(currency)" class="dropdown-item d-flex align-items-center text-danger gap-2 pointer">
+                                        <span>
+                                            <i class="ti ti-trash fs-4"></i>
+                                        </span>Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-pagination [pagination]="paginatedCurrencies" (clickedPagination)="getCurrencies({query: $event})"></app-pagination>
+
+<app-add-currency (currencyAdded)="getCurrencies({query: ''})" />
+<app-edit-currency [currencySubject]="selectedCurrencySubject.asObservable()" (currencyUpdated)="getCurrencies({query: ''})" />

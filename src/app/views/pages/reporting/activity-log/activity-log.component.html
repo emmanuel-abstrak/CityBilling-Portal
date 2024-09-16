@@ -1,0 +1,129 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <form [formGroup]="searchForm" (ngSubmit)="doSearch()" class="search-filter d-flex align-items-center gap-3">
+        <div class="position-relative d-flex align-items-center">
+            <i class="ti ti-search position-absolute fw-bold me-n2 z-5 ms-2"></i>
+            <input type="text" formControlName="search" class="form-control form-control-sm ps-4" placeholder="Search user or action" />
+        </div>
+        <button type="submit" [disabled]="loading" class="btn search-btn btn-sm px-3">Search</button>
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        @if(submitted) {
+        <button class="btn btn-link btn-sm px-0 text-danger" (click)="clearSearch()">Clear</button>
+        }
+    </form>
+</div>
+
+<div class="card card-body {{ loading ? 'content-loading' : '' }} py-0 pb-3">
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap mb-3">
+            <thead>
+                <tr class="text-muted fw-semibold">
+                    <th scope="col" class="ps-0">User</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col" class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top">
+                @for (activity of paginatedActivities.items; track activity) {
+                <tr>
+                    <td class="ps-0">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2 pe-1">
+                                <div class="rounded-circle avatar avatar-sm bg-success-subtle text-success border-success border" alt="modernize-img">{{ activity.actor.initials }}</div>
+                            </div>
+                            <div>
+                                <h6 class="fw-semibold mb-1">{{ activity.actor.firstName }} {{ activity.actor.lastName }}</h6>
+                                <p class="fs-2 mb-0 text-muted text-capitalize">
+                                    {{ activity.actor.role }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="fs-2 mb-0 text-muted text-capitalize">
+                            {{ activity.action }}
+                        </p>
+                    </td>
+                    <td>
+                        <h6 class="fw-semibold mb-1">{{ activity.createdAt }}</h6>
+                    </td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-dots-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu" style>
+                                <li>
+                                    <button (click)="activeLog = activity" data-bs-toggle="offcanvas" data-bs-target="#activityDetailCanvas"
+                                        aria-controls="activityDetailCanvas"
+                                        class="dropdown-item d-flex align-items-center gap-2">
+                                        Details
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-pagination [pagination]="paginatedActivities" (clickedPagination)="doPagination($event)"></app-pagination>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="activityDetailCanvas" aria-labelledby="offcanvasRightLabel">
+    @if (activeLog != null) {
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+            {{ activeLog.actor.firstName }} {{ activeLog.actor.lastName }}
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="d-flex flex-column justify-content-start align-items-center">
+            <h4 class="fs-5">
+                {{ activeLog.action }}
+            </h4>
+            <small class="text-muted">{{ activeLog.createdAt }}</small>
+        </div>
+        <div class="mt-4">
+            <div class="table-responsive bg-success rounded-2 mb-4">
+                <table>
+                    <tbody>
+                        @if(activeLog.before != null) {
+                        @for (detail of getObjectEntries(activeLog.before); track $index) {
+                        <tr>
+                            <td class="text-dark p-3 py-2">{{detail[0]}}</td>
+                            <td class="text-white p-3 py-2">{{detail[1]}}</td>
+                        </tr>
+                        }
+                        } @else {
+                        <tr><td class="text-white p-3 py-2 text-center" colspan="2">Empty</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive rounded-2 bg-danger">
+                <table>
+                    <tbody>
+                        @if(activeLog.after != null) {
+                        @for (detail of getObjectEntries(activeLog.after); track $index) {
+                        <tr>
+                            <td class="text-dark p-3 py-2">{{detail[0]}}</td>
+                            <td class="text-white p-3 py-2">{{detail[1]}}</td>
+                        </tr>
+                        }
+                        } @else {
+                        <tr><td class="text-white p-3 py-2 text-center" colspan="2">Empty</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+</div>

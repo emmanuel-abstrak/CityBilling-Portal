@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthToken } from '@models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthState {
@@ -41,11 +42,13 @@ export class AuthState {
         this.stateItem.next(null);
     }
 
-    private _SaveToken(token: string) {
-        localStorage.setItem(environment.tokenStorageKey, token);
+    private _SaveToken(authToken: AuthToken) {
+        localStorage.setItem(environment.tokenStorageKey, authToken.token);
+        localStorage.setItem(environment.userStorageKey, JSON.stringify(authToken.user));
     }
-    private _RemoveToken() {
+    private _DestroySession() {
         localStorage.removeItem(environment.tokenStorageKey);
+        localStorage.removeItem(environment.userStorageKey);
     }
 
     private _GetLocalToken(): string | null {
@@ -56,26 +59,15 @@ export class AuthState {
         return null;
     }
 
-    SaveSession(token: string): string | null {
-        if (token) {
-            this._SaveToken(token);
-            this.SetState(token);
-            return token;
+    SaveSession(authToken: AuthToken): AuthToken | null {
+        if (authToken) {
+            this._SaveToken(authToken);
+            this.SetState(authToken.token);
+            return authToken;
         } else {
-            this._RemoveToken();
+            this._DestroySession();
             this.RemoveState();
             return null;
-        }
-    }
-
-    UpdateSession(token: string) {
-        const _localToken: string = this._GetLocalToken();
-        if (_localToken) {
-            this._SaveToken(_localToken);
-            this.UpdateState(token);
-        } else {
-            this._RemoveToken();
-            this.RemoveState();
         }
     }
 
@@ -89,7 +81,7 @@ export class AuthState {
 
     Logout(reroute: boolean = false) {
         this.RemoveState();
-        this._RemoveToken();
+        this._DestroySession();
 
         if (reroute) {
             this.router.navigateByUrl('/login');
@@ -99,5 +91,13 @@ export class AuthState {
     GetToken() {
         const token = this.stateItem.getValue();
         return this.CheckAuth(token) ? token : null;
+    }
+
+    GetUser(): string | null {
+        const _user: string = JSON.parse(localStorage.getItem(environment.userStorageKey));
+        if (_user) {
+            return _user;
+        }
+        return null;
     }
 }

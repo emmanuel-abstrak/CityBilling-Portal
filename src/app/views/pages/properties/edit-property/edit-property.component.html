@@ -1,0 +1,178 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editPropertyCanvas" aria-labelledby="editPropertyCanvas">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+            Update Property
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mt-4">
+            <form [formGroup]="editForm">
+                <fieldset class="mb-4">
+                    <legend>Property Details</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Suburb</label>
+                                <select2 class="forn-control" [placeholder]="'Select'" [data]="suburbList" [value]="selectedSuburb" (update)="onSuburbSelect($event)"></select2>
+                                @if (submitted && f['propertySuburb'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['propertySuburb'].errors['required']) {
+                                    <div>Select a suburb</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property Type</label>
+                                <select2 class="forn-control" [placeholder]="'Select'" [data]="typesList" [value]="selectedType" (update)="onTypeSelect($event)"></select2>
+                                @if (submitted && f['propertyType'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['propertyType'].errors['required']) {
+                                    <div>Select property type</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Street Address</label>
+                        <input [readonly]="loading" type="text" formControlName="propertyStreetAddress" class="form-control" />
+                        @if (submitted && f['propertyStreetAddress'].errors) {
+                        <div class="invalid-feedback">
+                            @if (f['propertyStreetAddress'].errors['required']) {
+                            <div>Street address is required</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property Size <span class="text-muted">(m<sup>2</sup>)</span></label>
+                                <input [readonly]="loading" type="number" formControlName="propertySize" class="form-control" />
+                                @if (submitted && f['propertySize'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['propertySize'].errors['required'] || f['propertySize'].errors['min']) {
+                                    <div>Property size is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Meter Number</label>
+                                <input [readonly]="loading" type="tel" formControlName="propertyMeter" class="form-control" />
+                                @if (submitted && f['propertyMeter'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['propertyMeter'].errors['required']) {
+                                    <div>Meter number is required</div>
+                                    }
+                                    @if (f['propertyMeter'].errors['pattern']) {
+                                    <div>Enter valid meter number</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Owner Details</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">First Name</label>
+                                <input [readonly]="loading" type="text" formControlName="ownerFirstName" class="form-control" />
+                                @if (submitted && f['ownerFirstName'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['ownerFirstName'].errors['required']) {
+                                    <div>First name is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Owner Last Name</label>
+                                <input [readonly]="loading" type="text" formControlName="ownerLastName" class="form-control" />
+                                @if (submitted && f['ownerLastName'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['ownerLastName'].errors['required']) {
+                                    <div>Owner's last name is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input [readonly]="loading" type="tel" formControlName="ownerEmail" class="form-control" />
+                                @if (submitted && f['ownerEmail'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['ownerEmail'].errors['required']) {
+                                    <div>Email is required</div>
+                                    }@if (f['ownerEmail'].errors['email']) {
+                                    <div>Enter a valid email address</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Cell Number</label>
+                                <input [readonly]="loading" type="tel" formControlName="ownerPhoneNumber" class="form-control" />
+                                @if (submitted && f['ownerPhoneNumber'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['ownerPhoneNumber'].errors['required']) {
+                                    <div>Cell number is required</div>
+                                    }
+                                    @if (f['ownerPhoneNumber'].errors['pattern']) {
+                                    <div>Enter a valid cell number</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">ID Number</label>
+                                <input [readonly]="loading" type="text" formControlName="ownerId" class="form-control" />
+                                @if (submitted && f['ownerId'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['ownerId'].errors['required']) {
+                                    <div>ID number is required</div>
+                                    }
+                                    @if (f['ownerId'].errors['pattern']) {
+                                    <div>Enter a valid ID number</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="offcanvas-header border-top d-flex justify-content-start align-items-center gap-3">
+        <button type="submit" (click)="onSubmit()" [disabled]="loading" class="btn btn-primary px-5 rounded-2">
+            @if(loading) {
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            }
+            <span>Update Property</span>
+        </button>
+        <button class="btn btn-light" data-bs-dismiss="offcanvas">Cancel</button>
+    </div>
+</div>

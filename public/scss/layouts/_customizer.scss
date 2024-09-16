@@ -22,8 +22,8 @@
     }
   }
 
-  .btn-check:checked+.btn,
-  :not(.btn-check)+.btn:active,
+  .btn-check:checked + .btn,
+  :not(.btn-check) + .btn:active,
   .btn:first-child:active,
   .btn.active,
   .btn.show {
@@ -35,9 +35,8 @@
   }
 
   &.color-pallete {
-
-    .btn-check:checked+.btn,
-    :not(.btn-check)+.btn:active,
+    .btn-check:checked + .btn,
+    :not(.btn-check) + .btn:active,
     .btn:first-child:active,
     .btn.active,
     .btn.show {
@@ -55,7 +54,7 @@
       }
 
       &.skin-1 {
-        background-color: #5d87ff;
+        background-color: #157cbe;
       }
 
       &.skin-2 {

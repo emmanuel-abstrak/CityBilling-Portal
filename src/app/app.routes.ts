@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@guards/auth.guard';
 import { loginResolver } from '@resolvers/login.resolver';
-import { userResolver } from '@resolvers/user.resolver';
 import { NotFoundComponent } from '@views/errors/not-found/not-found.component';
 import { MainComponent } from '@views/layouts/main/main.component';
 import { PlainComponent } from '@views/layouts/plain/plain.component';
@@ -11,7 +10,6 @@ export const routes: Routes = [
         path: '',
         component: MainComponent,
         canActivate: [authGuard],
-        resolve: { currentUserState: userResolver },
         loadChildren: () =>
             import('./views/pages/pages.routes').then((m) => m.PagesRoutes),
     },

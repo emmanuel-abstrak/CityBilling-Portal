@@ -4,6 +4,7 @@ import {
     HttpHandler,
     HttpEvent,
     HttpErrorResponse,
+    HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -14,17 +15,21 @@ import {
     finalize,
     Subject,
     filter,
+    tap,
+    EMPTY,
 } from 'rxjs';
-import { AuthService } from '@services/auth.service';
+import { AuthService } from '@services/api/auth.service';
 import { AuthState } from '@states/auth.state';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
     isBusy: boolean = false;
     recall: Subject<boolean> = new Subject();
 
-    constructor(private authState: AuthState, private router: Router) { }
+    constructor(private authState: AuthState, private router: Router, private toastService: ToastrService, private location: Location) { }
     intercept(
         req: HttpRequest<any>,
         next: HttpHandler
@@ -41,8 +46,18 @@ export class AppHttpInterceptor implements HttpInterceptor {
                     req.url.indexOf('login') < 0
                 ) {
                     return this.handle401Error();
+                } else {
+                    if (typeof (error.error.result) != 'undefined') {
+                        this.toastService.error(error.error.result);
+                    } else {
+                        this.toastService.error('An error occurred, please try again');
+                    }
+
+                    // if (error.status != 400) {
+                    //     this.router.navigateByUrl('/');
+                    // }
                 }
-                return throwError(() => error);
+                return EMPTY;
             })
         );
     }

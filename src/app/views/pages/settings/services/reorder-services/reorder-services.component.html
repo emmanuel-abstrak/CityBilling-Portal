@@ -1,0 +1,28 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="orderServiceCanvas" aria-labelledby="orderServiceCanvas">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+            Service Priority
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mt-4">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                @for (service of services; track service) {
+                <div class="d-flex align-items-center handle gap-2 border rounded mb-2" cdkDrag>
+                    <i class="ti ti-arrows-move fs-5"></i>
+                    <span>{{service.name}}</span>
+                </div>
+                }
+            </div>
+            <button type="submit" [disabled]="loading || !ordered" (click)="submit()" class="btn btn-primary w-100 py-8 mt-4 rounded-2">
+                @if(loading) {
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                }
+                <span>Save Order</span>
+            </button>
+        </div>
+    </div>
+</div>

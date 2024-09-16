@@ -22,6 +22,7 @@
       "@environments/*": ["./src/environments/*"],
       "@components/*": ["./src/app/views/components/*"],
       "@views/*": ["./src/app/views/*"],
+      "@constants/*": ["./src/app/constants/*"],
       "@services/*": ["./src/app/services/*"],
       "@states/*": ["./src/app/states/*"],
       "@models/*": ["./src/app/models/*"],

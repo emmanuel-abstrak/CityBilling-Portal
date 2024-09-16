@@ -5,6 +5,7 @@
   background: var(--bs-body-bg);
   z-index: 9;
   padding: 0 25px;
+  height: 60px;
   .navbar {
     min-height: $headerHeight;
     .navbar-toggler:focus {
@@ -46,8 +47,6 @@
         .nav-link {
           display: flex;
           align-items: center;
-          line-height: 70px;
-          height: 70px;
           padding: $linkSpacer;
           font-size: 14px;
           color: var(--bs-link-color);
@@ -58,25 +57,13 @@
           &:hover {
             color: var(--bs-primary);
           }
-
-          @include media-breakpoint-up(lg) {
-            line-height: 36px;
-            height: 36px;
-          }
         }
       }
       &.quick-links {
         .nav-item {
           .nav-link {
-            line-height: 70px;
-            height: 70px;
             position: relative;
             z-index: 2;
-
-            @include media-breakpoint-up(lg) {
-              line-height: 36px;
-              height: 36px;
-            }
 
             &:hover {
               transition: all 0.1s ease-in-out;

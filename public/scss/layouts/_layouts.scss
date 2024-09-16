@@ -3,7 +3,7 @@
 }
 
 .page-wrapper {
-  
+
 
   .body-wrapper > .container-fluid {
     transition: 0.2s ease-in;
@@ -35,9 +35,9 @@ ul {
 }
 
 
-// 
+//
 // Above Large screen
-// 
+//
 @include media-breakpoint-up(xl) {
   [data-layout="vertical"] {
     .topbar {
@@ -64,6 +64,10 @@ ul {
           }
         }
 
+        .brand-logo {
+            padding: 0 24px;
+        }
+
         .logo-img {
           width: 40px;
           overflow: hidden;
@@ -83,9 +87,9 @@ ul {
 
         .left-sidebar {
           width: $sidebar-width-mini;
-          box-shadow: 0 10px 20px rgba(0,0,0,0.12);
           .scroll-sidebar {
             height: calc(100vh - 50px);
+            padding: 0 24px;
           }
           .hide-menu,
           .fixed-profile {
@@ -93,6 +97,7 @@ ul {
           }
           .sidebar-nav ul .sidebar-item .sidebar-link {
             padding: 11px 9px;
+            color: #476370;
           }
 
           &:hover {

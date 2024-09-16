@@ -13,7 +13,7 @@ $gray-600: #2a3547 !default;
 $black: #000 !default;
 
 // Color
-$blue: #5d87ff !default;
+$blue: #157cbe !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #d63384 !default;
@@ -55,7 +55,7 @@ $theme-colors: (
 ) !default;
 
 // light colors
-$primary-bg-subtle: #ecf2ff !default;
+$primary-bg-subtle: #d9edfa !default;
 $secondary-bg-subtle: #e8f7ff !default;
 $success-bg-subtle: #e6fffa !default;
 $info-bg-subtle: #ebf3fe !default;
@@ -123,9 +123,9 @@ $grid-gutter-width: 24px !default;
 // Font Weight
 $font-weight-lighter: 300 !default;
 $font-weight-light: 300 !default;
-$font-weight-normal: 400 !default;
-$font-weight-bold: 500 !default;
-$font-weight-bolder: 700 !default;
+$font-weight-normal: 500 !default;
+$font-weight-bold: 600 !default;
+$font-weight-bolder: 900 !default;
 $font-weight-base: $font-weight-normal !default;
 
 // Buttons
@@ -138,7 +138,7 @@ $btn-font-size: 14 !default;
 $btn-border-radius-lg: 9px !default;
 
 // Font Family
-$font-family-sans-serif: "Plus Jakarta Sans", sans-serif !default;
+$font-family-sans-serif: "Rubik", sans-serif !default;
 
 // Font Sizes
 $font-sizes: (
@@ -247,7 +247,7 @@ $input-padding-x: 16px;
 $form-check-input-width: 1.313em;
 $form-check-min-height: 1.313em;
 $form-check-input-border: 1.25px solid #dfe5ef;
-$form-check-input-checked-bg-color:var(--bs-primary);
+$form-check-input-checked-bg-color: var(--bs-primary);
 
 // Paganation
 $pagination-active-color: $white !default;
@@ -309,7 +309,6 @@ $grid-breakpoints: (
   xl: 1300px,
   xxl: 1400px,
 ) !default;
-
 
 $hr-border-color: $border-color !default;
 $hr-opacity: 1 !default;

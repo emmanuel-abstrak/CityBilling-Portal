@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <form [formGroup]="searchForm" (ngSubmit)="doSearch()" class="search-filter d-flex align-items-center gap-3">
+        <div class="position-relative d-flex align-items-center">
+            <i class="ti ti-search position-absolute fw-bold me-n2 z-5 ms-2"></i>
+            <input type="text" formControlName="search" class="form-control form-control-sm ps-4" placeholder="Search by name" />
+        </div>
+        <button type="submit" [disabled]="loading" class="btn search-btn btn-sm px-3">Search</button>
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        @if(submitted && !loading) {
+        <button type="button" class="btn btn-link btn-sm px-0 text-danger" (click)="clearSearch()">Clear</button>
+        }
+    </form>
+    <div class="actions d-flex align-items-center gap-2">
+        <a data-bs-toggle="offcanvas" data-bs-target="#addPricingCanvas" aria-controls="addPricingCanvas" class="btn btn-primary btn-sm">Add Pricing</a>
+    </div>
+</div>
