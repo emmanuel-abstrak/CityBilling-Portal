@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PropertyTypeSelect } from '@models/property-type.model';
 import { Property } from '@models/property.model';
 import { SuburbSelect } from '@models/suburb.model';
 import { PropertyService } from '@services/api/property.service';
@@ -18,6 +19,7 @@ export class EditPropertyComponent {
     private eventsSubscription: Subscription;
     @Output() propertyUpdated = new EventEmitter<boolean>();
     @Input() suburbList: SuburbSelect[];
+    @Input() typesList: PropertyTypeSelect[];
     @Input() public propertySubject: Observable<Property>;
     public property: Property;
     public selectedSuburb;
@@ -38,24 +40,13 @@ export class EditPropertyComponent {
         propertyMeter: new FormControl(''),
     });
 
-    public typesList = [
-        {
-            value: 'residential',
-            label: 'Residential'
-        },
-        {
-            value: 'commercial',
-            label: 'Commercial'
-        },
-    ];
-
     constructor(private fb: FormBuilder, private propertyService: PropertyService, private toastService: ToastrService) { }
 
     ngOnInit(): void {
         this.eventsSubscription = this.propertySubject.subscribe((property) => {
             this.property = property;
             this.selectedSuburb = property.suburb.id;
-            this.selectedType = property.type;
+            this.selectedType = property.type.id;
 
             this.editForm = this.fb.group({
                 ownerFirstName: [property.owner.firstName, [Validators.required]],
@@ -65,7 +56,7 @@ export class EditPropertyComponent {
                 ownerId: [property.owner.idNumber, [Validators.required, Validators.pattern('^[1-9]{2}-[1-9]{6}[A-Z][1-9]{2}$')]],
                 propertyStreetAddress: [property.address, [Validators.required]],
                 propertySuburb: [property.suburb.id, [Validators.required]],
-                propertyType: [property.type, [Validators.required]],
+                propertyType: [property.type.id, [Validators.required]],
                 propertySize: [property.size, [Validators.required, Validators.min(1)]],
                 propertyMeter: [property.meter, [Validators.required, Validators.pattern('[0-9]*')]]
             });

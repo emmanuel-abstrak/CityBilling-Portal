@@ -5,10 +5,10 @@ export interface TariffGroup {
     suburb: Suburb;
     minSize: number;
     maxSize: number;
-    residentialRatesCharge: number;
-    residentialRefuseCharge: number;
-    residentialSewerageCharge: number;
-    commercialRatesCharge: number;
-    commercialRefuseCharge: number;
-    commercialSewerageCharge: number;
+    tariffs: {
+        id: number;
+        propertyType: string;
+        service: string;
+        price: string;
+    }[];
 }

@@ -80,7 +80,7 @@ export class ServicesComponent {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.getServices({ query: '' });
+                this.paginatedServices.items = this.paginatedServices.items.filter((s: Service) => s.id != service.id);
             }
         });
     }

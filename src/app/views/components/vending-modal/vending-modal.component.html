@@ -9,7 +9,7 @@
         @if(property) {
         <div class="mt-0">
             <form [formGroup]="vendForm" (ngSubmit)="onSubmit()">
-                @if(property.balances.rates > 0 ) {
+                <!-- @if(property.balances.rates > 0 ) {
                 <div class="mb-3">
                     <label class="form-label">Rates <span class="text-muted">(USD)</span></label>
                     <input type="number" formControlName="rates" class="form-control" />
@@ -55,7 +55,7 @@
                     </div>
                     }
                     <span>Submit</span>
-                </button>
+                </button> -->
             </form>
         </div>
         }

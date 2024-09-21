@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { PaginatedResponse } from '@helpers/response.helper';
 import { Suburb, SuburbSelect } from '@models/suburb.model';
 import { TariffGroup } from '@models/tariff-group.model';
@@ -12,11 +11,13 @@ import Swal from 'sweetalert2';
 import { AddTariffComponent } from "./add-tariff/add-tariff.component";
 import { PaginationComponent } from "../../../components/pagination/pagination.component";
 import { EditTariffComponent } from "./edit-tariff/edit-tariff.component";
+import { SuburbService } from '@services/api/suburb.service';
+import { ViewTariffChargesComponent } from "./view-tariff-charges/view-tariff-charges.component";
 
 @Component({
     selector: 'app-tariff-groups',
     standalone: true,
-    imports: [ReactiveFormsModule, Select2Module, AddTariffComponent, PaginationComponent, EditTariffComponent],
+    imports: [ReactiveFormsModule, Select2Module, AddTariffComponent, PaginationComponent, EditTariffComponent, ViewTariffChargesComponent],
     templateUrl: './tariff-groups.component.html',
     styleUrl: './tariff-groups.component.scss'
 })
@@ -24,29 +25,27 @@ export class TariffGroupsComponent {
     public selectedTariffGroup: TariffGroup;
     public selectedTariffGroupSubject: Subject<TariffGroup> = new Subject<TariffGroup>();
     public paginatedTariffGroups: PaginatedResponse<TariffGroup>;
-    public suburbs: SuburbSelect[];
+    public suburbs: SuburbSelect[] = [];
     public suburbAddSelectList: SuburbSelect[];
     public selectedSuburb = '';
     public submitted = false;
     public loading = false;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private tariffGroupService: TariffGroupService,
+        private suburbService: SuburbService,
         private toastService: ToastrService
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(data => {
-            this.paginatedTariffGroups = data['tariffsState'];
-        });
+        this.getTariffGroups({});
 
-        this.activatedRoute.data.subscribe(data => {
-            const subs = data['suburbState'].items.map((suburb: Suburb) => {
+        this.suburbService.All().subscribe(data => {
+            const subs = data.items.map((suburb: Suburb) => {
                 return { value: suburb.id, label: suburb.name };
             });
 
-            this.suburbs = [{ value: '', label: 'All Suburbs' }, ...subs];
+            this.suburbs = [{ value: null, label: 'All Suburbs' }, ...subs];
             this.suburbAddSelectList = subs;
         });
     }
@@ -81,12 +80,15 @@ export class TariffGroupsComponent {
                 this.tariffGroupService.Delete(tariff.id).subscribe((result) => {
                     if (result.success) {
                         this.toastService.success(`${tariff.suburb.name} deleted!`);
-                        this.getTariffGroups({ query: '' });
                     }
                     return;
                 })
             }
-        });
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.paginatedTariffGroups.items = this.paginatedTariffGroups.items.filter((t: TariffGroup) => t.id != tariff.id);
+            }
+        });;
     }
 
     clearSearch() {

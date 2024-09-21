@@ -25,8 +25,8 @@ export class AuthService {
 
     private _MapResponse(response: any) {
         return {
-            token: response.result.access_token,
-            user: response.result.user
+            accessToken: response.result.accessToken,
+            user: response.result
         };
     }
 }

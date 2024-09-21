@@ -1,113 +1,116 @@
 <!--  Row 1 -->
 <div class="row">
 
-     <!-- Customers -->
-            <div class="col-sm-3 d-flex align-items-stretch">
-                <div class="card w-100">
-                    <div class="card-body pb-0 mb-xxl-4 pb-1">
-                        <p class="mb-1 fs-3">Properties</p>
-                        <h4 class="fw-semibold fs-4">
-                            @if (propertyCount) {
-                            <span class="text-primary">{{ propertyCount }}</span>
-                            }
-                            @else {
-                            <div class="spinner-border spinner-border-sm border-2 fw-light text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            }
-                        </h4>
-                        <div class="d-flex align-items-center">
-                            <span
-                                class="me-2 rounded-circle bg-primary-subtle round-20 d-flex align-items-center justify-content-center">
-                                <i class="ti ti-smart-home text-primary"></i>
-                            </span>
-                            <p class="text-dark fs-3 mb-0">All time</p>
-                        </div>
+    <!-- Customers -->
+    <div class="col-sm-3 d-flex align-items-stretch">
+        <div class="card w-100">
+            <div class="card-body pb-0 mb-xxl-4 pb-1">
+                <p class="mb-1 fs-3">Total Properties</p>
+                <h4 class="fw-semibold fs-4">
+                    @if (propertyCount) {
+                    <span class="text-primary">{{ propertyCount }}</span>
+                    }
+                    @else {
+                    <div class="spinner-border spinner-border-sm border-2 fw-light text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
+                    }
+                </h4>
+                <div class="d-flex align-items-center">
+                    <span
+                        class="me-2 rounded-circle bg-primary-subtle round-20 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-smart-home text-primary"></i>
+                    </span>
+                    <p class="text-dark fs-3 mb-0">All time</p>
                 </div>
             </div>
-            <!-- Projects -->
-            <div class="col-sm-3 d-flex align-items-stretch">
-                <div class="card w-100">
-                    <div class="card-body">
-                        <p class="mb-1 fs-3">Balances</p>
-                        <h4 class="fw-semibold fs-4">
-                            @if (balances) {
-                            <span class="text-danger">{{ balances }}</span>
-                            }
-                            @else {
-                            <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            }
-                        </h4>
-                        <div class="d-flex align-items-center">
-                            <span
-                                class="me-1 rounded-circle bg-danger-subtle round-20 d-flex align-items-center justify-content-center">
-                                <i class="ti ti-calendar text-danger"></i>
-                            </span>
-                            <p class="text-dark fs-3 mb-0">This month</p>
-                        </div>
+        </div>
+    </div>
+    <!-- Projects -->
+    <div class="col-sm-3 d-flex align-items-stretch">
+        <div class="card w-100">
+            <div class="card-body">
+                <p class="mb-1 fs-3">Arrears</p>
+                <h4 class="fw-semibold fs-4">
+                    @if (balances) {
+                    <span class="text-danger">{{ balances }}</span>
+                    }
+                    @else {
+                    <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
+                    }
+                </h4>
+                <div class="d-flex align-items-center">
+                    <span
+                        class="me-1 rounded-circle bg-danger-subtle round-20 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-calendar text-danger"></i>
+                    </span>
+                    <p class="text-dark fs-3 mb-0">This month</p>
                 </div>
             </div>
-            <!-- Projects -->
-            <div class="col-sm-3 d-flex align-items-stretch">
-                <div class="card w-100">
-                    <div class="card-body">
-                        <p class="mb-1 fs-3">Admin Users</p>
-                        <h4 class="fw-semibold fs-4">
-                            @if (balances) {
-                            <span class="text-warning">3</span>
-                            }
-                            @else {
-                            <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            }
-                        </h4>
-                        <div class="d-flex align-items-center">
-                            <span
-                                class="me-1 rounded-circle bg-warning-subtle round-20 d-flex align-items-center justify-content-center">
-                                <i class="ti ti-users text-warning"></i>
-                            </span>
-                            <p class="text-dark fs-3 mb-0">Total</p>
-                        </div>
+        </div>
+    </div>
+    <!-- Projects -->
+    <div class="col-sm-3 d-flex align-items-stretch">
+        <div class="card w-100">
+            <div class="card-body">
+                <p class="mb-1 fs-3">Admin Users</p>
+                <h4 class="fw-semibold fs-4">
+                    @if (balances) {
+                    <span class="text-warning">3</span>
+                    }
+                    @else {
+                    <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
+                    }
+                </h4>
+                <div class="d-flex align-items-center">
+                    <span
+                        class="me-1 rounded-circle bg-warning-subtle round-20 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-users text-warning"></i>
+                    </span>
+                    <p class="text-dark fs-3 mb-0">Total</p>
                 </div>
             </div>
-            <!-- Projects -->
-            <div class="col-sm-3 d-flex align-items-stretch">
-                <div class="card w-100">
-                    <div class="card-body">
-                        <p class="mb-1 fs-3">Suburbs</p>
-                        <h4 class="fw-semibold fs-4">
-                            @if (balances) {
-                            <span class="text-success">5</span>
-                            }
-                            @else {
-                            <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            }
-                        </h4>
-                        <div class="d-flex align-items-center">
-                            <span
-                                class="me-1 rounded-circle bg-success-subtle round-20 d-flex align-items-center justify-content-center">
-                                <i class="ti ti-building text-success"></i>
-                            </span>
-                            <p class="text-dark fs-3 mb-0">Total</p>
-                        </div>
+        </div>
+    </div>
+    <!-- Projects -->
+    <div class="col-sm-3 d-flex align-items-stretch">
+        <div class="card w-100">
+            <div class="card-body">
+                <p class="mb-1 fs-3">Suburbs</p>
+                <h4 class="fw-semibold fs-4">
+                    @if (balances) {
+                    <span class="text-success">5</span>
+                    }
+                    @else {
+                    <div class="spinner-border spinner-border-sm border-2 fw-light text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
+                    }
+                </h4>
+                <div class="d-flex align-items-center">
+                    <span
+                        class="me-1 rounded-circle bg-success-subtle round-20 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-building text-success"></i>
+                    </span>
+                    <p class="text-dark fs-3 mb-0">Total</p>
                 </div>
             </div>
+        </div>
+    </div>
     <div class="col-lg-6 d-flex align-items-stretch">
         <div class="card w-100 pb-0">
             <div class="card-body">
                 <div>
-                    <h4 class="card-title fw-semibold mb-0">
-                        Rates Tariff Movement
-                    </h4>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title fw-semibold mb-0">
+                            Tariffs
+                        </h4>
+                        <select2 class="forn-control" [placeholder]="'Select Type'" [value]="selectedType" [data]="types" (update)="onTypeSelect($event)"></select2>
+                    </div>
                     <div id="chart">
                         <apx-chart
                             [series]="chartOptions.series"
@@ -131,9 +134,12 @@
         <div class="card w-100 pb-0">
             <div class="card-body">
                 <div>
-                    <h4 class="card-title fw-semibold mb-0">
-                        Refuse Tariff Movement
-                    </h4>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title fw-semibold mb-0">
+                            Water Purchased
+                        </h4>
+                        <select2 class="forn-control" [placeholder]="'Select Type'" [value]="selectedType" [data]="types" (update)="onTypeSelect($event)"></select2>
+                    </div>
                     <div id="chart">
                         <apx-chart
                             [series]="chartOptions.series"
@@ -153,83 +159,4 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6 d-flex align-items-stretch">
-        <div class="card w-100 pb-0">
-            <div class="card-body">
-                <div>
-                    <h4 class="card-title fw-semibold mb-0">
-                        Sewer Tariff Movement
-                    </h4>
-                    <div id="chart">
-                        <apx-chart
-                            [series]="chartOptions.series"
-                            [chart]="chartOptions.chart"
-                            [stroke]="chartOptions.stroke"
-                            [dataLabels]="chartOptions.dataLabels"
-                            [plotOptions]="chartOptions.plotOptions"
-                            [xaxis]="chartOptions.xaxis"
-                            [colors]="chartOptions.colors"
-                            [fill]="chartOptions.fill"
-                            [yaxis]="chartOptions.yaxis"
-                            [grid]="chartOptions.grid"
-                            [tooltip]="chartOptions.tooltip"
-                            [legend]="chartOptions.legend"></apx-chart>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="activityDetailCanvas" aria-labelledby="offcanvasRightLabel">
-    @if (activeLog != null) {
-    <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
-            {{ activeLog.actor.firstName }} {{ activeLog.actor.lastName }}
-        </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div class="d-flex flex-column justify-content-start align-items-center">
-            <h4 class="fs-5">
-                {{ activeLog.action }}
-            </h4>
-            <small class="text-muted">{{ activeLog.createdAt }}</small>
-        </div>
-        <div class="mt-4">
-            <div class="table-responsive bg-success rounded-2 mb-4">
-                <table>
-                    <tbody>
-                        @if(activeLog.before != null) {
-                        @for (detail of getObjectEntries(activeLog.before); track $index) {
-                        <tr>
-                            <td class="text-dark p-3 py-2">{{detail[0]}}</td>
-                            <td class="text-white p-3 py-2">{{detail[1]}}</td>
-                        </tr>
-                        }
-                        } @else {
-                        <tr><td class="text-white p-3 py-2 text-center" colspan="2">Empty</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="table-responsive rounded-2 bg-danger">
-                <table>
-                    <tbody>
-                        @if(activeLog.after != null) {
-                        @for (detail of getObjectEntries(activeLog.after); track $index) {
-                        <tr>
-                            <td class="text-dark p-3 py-2">{{detail[0]}}</td>
-                            <td class="text-white p-3 py-2">{{detail[1]}}</td>
-                        </tr>
-                        }
-                        } @else {
-                        <tr><td class="text-white p-3 py-2 text-center" colspan="2">Empty</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    }
 </div>

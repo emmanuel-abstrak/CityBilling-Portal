@@ -43,7 +43,7 @@ export class AuthState {
     }
 
     private _SaveToken(authToken: AuthToken) {
-        localStorage.setItem(environment.tokenStorageKey, authToken.token);
+        localStorage.setItem(environment.tokenStorageKey, authToken.accessToken);
         localStorage.setItem(environment.userStorageKey, JSON.stringify(authToken.user));
     }
     private _DestroySession() {
@@ -62,7 +62,7 @@ export class AuthState {
     SaveSession(authToken: AuthToken): AuthToken | null {
         if (authToken) {
             this._SaveToken(authToken);
-            this.SetState(authToken.token);
+            this.SetState(authToken.accessToken);
             return authToken;
         } else {
             this._DestroySession();

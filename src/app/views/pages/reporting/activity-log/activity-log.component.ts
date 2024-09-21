@@ -25,14 +25,11 @@ export class ActivityLogComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private activatedRoute: ActivatedRoute,
         private activityLogService: ActivityLogService
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(data => {
-            this.paginatedActivities = data['activityLogs'];
-        });
+        this.getActivities();
 
         this.searchForm = this.fb.group({
             search: ['', [Validators.required]]

@@ -1,0 +1,38 @@
+<div class="modal fade" id="tariffChargesModal" aria-labelledby="tariffChargesModal">
+    <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-3 text-uppercase" id="exampleModalFullscreenLabel">
+                    @if(tariff) {
+                    <span>{{ tariff.suburb.name }}</span>
+                    }
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center text-muted">
+                    @if(tariff) {
+                        <span>{{ tariff.minSize }} m<sup>3</sup> - {{ tariff.maxSize }} m<sup>3</sup></span>
+                    }
+                </p>
+                <div class="card card-body bg-light mb-0 pt-0 pb-0">
+                    <div class="table-responsive">
+                        <table class="w-100 table-striped">
+                            <tbody>
+                                @if(tariff) {
+                                @for (item of tariff.tariffs; track item) {
+                                <tr>
+                                    <td class="py-3 border-bottom ps-0">{{ item.propertyType }}</td>
+                                    <td class="py-3 border-bottom">{{ item.service }}</td>
+                                    <td class="py-3 text-dark border-bottom text-end pe-0">{{ item.price }}</td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

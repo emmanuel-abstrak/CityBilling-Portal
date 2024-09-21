@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaginatedResponse } from '@helpers/response.helper';
 import { Activity } from '@models/activity.model';
+import { PropertyType, PropertyTypeSelect } from '@models/property-type.model';
 import { DashboardService } from '@services/api/dashboard.service';
+import { PropertyTypeService } from '@services/api/property-type.service';
 import {
     ChartComponent,
     ApexAxisChartSeries,
@@ -18,6 +20,7 @@ import {
     ApexStroke,
     ApexLegend
 } from "ng-apexcharts";
+import { Select2Module } from 'ng-select2-component';
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
@@ -37,7 +40,7 @@ export type ChartOptions = {
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [NgApexchartsModule],
+    imports: [NgApexchartsModule, Select2Module],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
@@ -46,10 +49,13 @@ export class DashboardComponent implements OnInit {
     public chartOptions: Partial<ChartOptions>;
     public propertyCount: string;
     public balances: string;
-    public activities: PaginatedResponse<Activity>;
-    public activeLog: Activity;
+    public types: PropertyTypeSelect[];
+    public selectedType = null;
 
-    constructor(private dashboardService: DashboardService) {
+    constructor(
+        private dashboardService: DashboardService,
+        private typeService: PropertyTypeService,
+    ) {
         this.chartOptions = {
             series: [
                 {
@@ -151,9 +157,15 @@ export class DashboardComponent implements OnInit {
             this.balances = data.result;
         });
 
-        this.dashboardService.Activities().subscribe((data) => {
-            this.activities = data;
+        this.typeService.All().subscribe(data => {
+            this.types = data.items.map((type: PropertyType) => {
+                return { value: type.id, label: type.name };
+            });
         });
+    }
+
+    onTypeSelect(event) {
+
     }
 
     getObjectEntries(code: string) {

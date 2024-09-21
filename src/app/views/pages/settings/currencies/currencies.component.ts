@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { PaginatedResponse } from '@helpers/response.helper';
 import { Currency } from '@models/currency.model';
 import { CurrencyService } from '@services/api/currency.service';
@@ -31,15 +30,12 @@ export class CurrenciesComponent {
 
     constructor(
         private fb: FormBuilder,
-        private activatedRoute: ActivatedRoute,
         private currencyService: CurrencyService,
         private toastService: ToastrService
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(data => {
-            this.paginatedCurrencies = data['currenciesState'];
-        });
+        this.getCurrencies({});
 
         this.searchForm = this.fb.group({
             search: [''],
@@ -80,7 +76,7 @@ export class CurrenciesComponent {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.getCurrencies({ query: '' });
+                this.paginatedCurrencies.items = this.paginatedCurrencies.items.filter((c: Currency) => c.id != currency.id);
             }
         });
     }

@@ -1,4 +1,4 @@
 export interface AuthToken {
-    token: string;
+    accessToken: string;
     user: any;
 }

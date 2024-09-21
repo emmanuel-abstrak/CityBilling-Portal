@@ -45,12 +45,6 @@ export class EditTariffComponent {
                 suburb: [tariff.suburb.id, [Validators.required]],
                 minSize: [tariff.minSize, [Validators.required]],
                 maxSize: [tariff.maxSize, [Validators.required]],
-                residentialRatesCharge: [tariff.residentialRatesCharge, [Validators.required]],
-                residentialRefuseCharge: [tariff.residentialRefuseCharge, [Validators.required]],
-                residentialSewerageCharge: [tariff.residentialSewerageCharge, [Validators.required]],
-                commercialRatesCharge: [tariff.commercialRatesCharge, [Validators.required]],
-                commercialRefuseCharge: [tariff.commercialRefuseCharge, [Validators.required]],
-                commercialSewerageCharge: [tariff.commercialSewerageCharge, [Validators.required]],
             });
         });
     }

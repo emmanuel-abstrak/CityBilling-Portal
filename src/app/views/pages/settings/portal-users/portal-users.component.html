@@ -31,6 +31,7 @@
                 </tr>
             </thead>
             <tbody class="border-top">
+                @if(paginatedUsers && paginatedUsers.items.length > 0) {
                 @for (user of paginatedUsers.items; track user) {
                 <tr>
                     <td class="ps-0">
@@ -79,6 +80,11 @@
                             </ul>
                         </div>
                     </td>
+                </tr>
+                }
+                } @else if(!loading && paginatedUsers && paginatedUsers.items.length == 0) {
+                <tr>
+                    <td colspan="6" class="text-center pt-3 text-muted">No users</td>
                 </tr>
                 }
             </tbody>

@@ -129,6 +129,10 @@
   font-weight: 500;
   gap: 0.5rem;
 }
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
 .invalid-feedback {
   display: block;
   font-weight: 600;

@@ -4,7 +4,8 @@
             <i class="ti ti-search position-absolute fw-bold me-n2 z-5 ms-2"></i>
             <input type="text" formControlName="search" class="form-control form-control-sm ps-4" placeholder="Search owner or meter" />
         </div>
-        <select2 class="forn-control" [placeholder]="'Select'" [value]="selectedSuburb" [data]="suburbs" (update)="onSuburbSelect($event)"></select2>
+        <select2 class="forn-control" [placeholder]="'Select Suburb'" [value]="selectedSuburb" [data]="suburbs" (update)="onSuburbSelect($event)"></select2>
+        <select2 class="forn-control" [placeholder]="'Select Type'" [value]="selectedType" [data]="types" (update)="onTypeSelect($event)"></select2>
         <button type="submit" [disabled]="loading" class="btn search-btn btn-sm px-3">Search</button>
         @if(loading) {
         <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -28,13 +29,13 @@
                     <th scope="col">Property Type</th>
                     <th scope="col">Location</th>
                     <th scope="col">Size (<span>m<sup>2</sup></span>)</th>
-                    <th scope="col">Charges (USD)</th>
+                    <th scope="col">Tariffs (USD)</th>
                     <th scope="col">Arrears (USD)</th>
                     <th scope="col" class="text-end">Actions</th>
                 </tr>
             </thead>
-            @if(paginatedProperties) {
             <tbody class="border-top">
+                @if(paginatedProperties && paginatedProperties.items.length > 0) {
                 @for (property of paginatedProperties.items; track property) {
                 <tr>
                     <td class="ps-0">
@@ -51,10 +52,10 @@
                         </div>
                     </td>
                     <td class="text-capitalize">
-                        {{ property.type }}
-                        <p class="mb-0 text-muted fw-normal">
+                        <p class="mb-0">{{ property.type.name }}</p>
+                        <span class="mb-0 w-auto text-muted bg-light badge fs-2 fw-normal">
                             {{ property.meter }}
-                        </p>
+                        </span>
                     </td>
                     <td>
                         {{ property.suburb.name }}
@@ -66,26 +67,18 @@
                         {{ property.size }}
                     </td>
                     <td>
+                        @for (tariff of property.tariffs; track tariff) {
                         <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Rates: </span><span class="text-dark fw-semibold">{{ property.ratesCharge }}</span>
+                            <span class="t-label">{{ tariff.name }}: </span><span class="text-dark fw-semibold">{{ tariff.price }}</span>
                         </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Sewer: </span><span class="text-dark fw-semibold">{{ property.sewerCharge }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Refuse: </span><span class="text-dark fw-semibold">{{ property.refuseCharge }}</span>
-                        </p>
+                        }
                     </td>
                     <td>
+                        @for (balance of property.balances; track balance) {
                         <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Rates: </span><span class="{{ property.balances.rates > 0 ? 'text-danger' : 'text-success' }} fw-semibold">{{ property.balances.rates }}</span>
+                            <span class="t-label">{{ balance.name }}: </span><span class="{{ balance.amount > 0 ? 'text-danger' : 'text-dark' }} fw-semibold">{{ balance.amount }}</span>
                         </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Sewer: </span><span class="{{ property.balances.sewer > 0 ? 'text-danger' : 'text-success' }} fw-semibold">{{ property.balances.sewer }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Refuse: </span><span class="{{ property.balances.refuse > 0 ? 'text-danger' : 'text-success' }} fw-semibold">{{ property.balances.refuse }}</span>
-                        </p>
+                        }
                     </td>
                     <td class="text-end">
                         <div class="dropdown">
@@ -101,29 +94,23 @@
                                         </span>Edit Details
                                     </a>
                                 </li>
-                                @if(property.balances.rates > 0 || property.balances.refuse > 0 || property.balances.sewer > 0) {
-                                <li>
-                                    <a (click)="changeSelectedProperty(property)" data-bs-toggle="offcanvas" data-bs-target="#vendingCanvas"
-                                        aria-controls="vendingCanvas" class="dropdown-item d-flex align-items-center gap-2 border-bottom pointer">
-                                        <span>
-                                            <i class="ti ti-calculator fs-5"></i>
-                                        </span>Settle Arrears
-                                    </a>
-                                </li>
-                                }
                             </ul>
                         </div>
                     </td>
                 </tr>
                 }
+                } @else if(!loading && paginatedProperties && paginatedProperties.items.length == 0) {
+                <tr>
+                    <td colspan="6" class="text-center pt-4 text-muted">No properties</td>
+                </tr>
+                }
             </tbody>
-            }
         </table>
     </div>
 </div>
 <app-pagination [pagination]="paginatedProperties" (clickedPagination)="doPagination($event)"></app-pagination>
 
-<app-add-property [suburbList]="suburbs" (propertyAdded)="getProperties({query: ''})" />
-<app-edit-property [suburbList]="suburbs" [propertySubject]="selectedPropertySubject.asObservable()" (propertyUpdated)="getProperties({query: ''})" />
+<app-add-property [typesList]="types" [suburbList]="suburbs" (propertyAdded)="getProperties({query: ''})" />
+<app-edit-property [typesList]="types" [suburbList]="suburbs" [propertySubject]="selectedPropertySubject.asObservable()" (propertyUpdated)="getProperties({query: ''})" />
 
 <app-vending-modal [propertySubject]="selectedPropertySubject.asObservable()" />

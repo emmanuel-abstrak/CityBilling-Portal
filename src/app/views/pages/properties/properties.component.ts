@@ -13,6 +13,8 @@ import { Select2Module } from 'ng-select2-component';
 import { EditPropertyComponent } from "./edit-property/edit-property.component";
 import { VendingModalComponent } from "../../components/vending-modal/vending-modal.component";
 import { SuburbService } from '@services/api/suburb.service';
+import { PropertyTypeService } from '@services/api/property-type.service';
+import { PropertyType, PropertyTypeSelect } from '@models/property-type.model';
 
 @Component({
     selector: 'app-properties',
@@ -26,7 +28,9 @@ export class PropertiesComponent {
     public selectedPropertySubject: Subject<Property> = new Subject<Property>();
     public paginatedProperties: PaginatedResponse<Property>;
     public suburbs: SuburbSelect[];
+    public types: PropertyTypeSelect[];
     public selectedSuburb = '';
+    public selectedType = null;
     public submitted = false;
     public loading = false;
 
@@ -38,6 +42,7 @@ export class PropertiesComponent {
         private fb: FormBuilder,
         private propertyService: PropertyService,
         private suburbService: SuburbService,
+        private typeService: PropertyTypeService,
         private toastService: ToastrService
     ) { }
 
@@ -47,6 +52,12 @@ export class PropertiesComponent {
         this.suburbService.All().subscribe(data => {
             this.suburbs = data.items.map((suburb: Suburb) => {
                 return { value: suburb.id, label: suburb.name };
+            });
+        });
+
+        this.typeService.All().subscribe(data => {
+            this.types = data.items.map((type: PropertyType) => {
+                return { value: type.id, label: type.name };
             });
         });
 
@@ -66,6 +77,10 @@ export class PropertiesComponent {
 
     onSuburbSelect(event) {
         this.selectedSuburb = event.value;
+    }
+
+    onTypeSelect(event) {
+        this.selectedType = event.value;
     }
 
     doPagination(event) {
@@ -106,7 +121,9 @@ export class PropertiesComponent {
         if (this.searchForm.invalid) {
             return;
         }
-        const query = "?search=" + this.f['search'].value + '&suburb=' + this.selectedSuburb;
+        const query = "?search=" + this.f['search'].value +
+            '&suburb=' + this.selectedSuburb +
+            '&type=' + this.selectedType;
         this.getProperties({ query, isSearch: true });
     }
 
@@ -126,6 +143,7 @@ export class PropertiesComponent {
             if (options.isClear) {
                 this.submitted = false;
                 this.selectedSuburb = '';
+                this.selectedType = '';
             }
             this.loading = false;
         })

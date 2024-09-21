@@ -17,17 +17,17 @@
 
 <div class="card card-body {{ loading ? 'content-loading' : '' }} py-0">
     <div class="table-responsive">
-        <table class="table align-middle text-nowrap mb-3">
+        <table class="table align-middle text-nowrap mb-0">
             <thead>
                 <tr class="text-muted fw-semibold">
                     <th scope="col" class="ps-0">Suburb</th>
                     <th scope="col">Size (m<sup>2</sup>)</th>
-                    <th scope="col">Commercial</th>
-                    <th scope="col">Residential</th>
+                    <th scope="col">Charges</th>
                     <th scope="col" class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody class="border-top">
+                @if(paginatedTariffGroups && paginatedTariffGroups.items.length > 0) {
                 @for (tariff of paginatedTariffGroups.items; track tariff) {
                 <tr>
                     <td class="ps-0">
@@ -39,26 +39,9 @@
                         </p>
                     </td>
                     <td>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Rates: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialRatesCharge }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Sewer: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialSewerageCharge }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Refuse: </span><span class="text-dark fw-semibold">USD {{ tariff.commercialRefuseCharge }}</span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Rates: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialRatesCharge }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Sewer: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialSewerageCharge }}</span>
-                        </p>
-                        <p class="small mb-0 text-muted text-uppercase">
-                            <span class="t-label">Refuse: </span><span class="text-dark fw-semibold">USD {{ tariff.residentialRefuseCharge }}</span>
-                        </p>
+                        <a class="gap-1 text-start pointer" (click)="changeSelectedTariff(tariff)" data-bs-toggle="modal" data-bs-target="#tariffChargesModal" href="javascript:void(0)">
+                            View <i class="ti ti-info-circle fw-semibold"></i>
+                        </a>
                     </td>
                     <td class="text-end">
                         <div class="dropdown">
@@ -86,11 +69,20 @@
                     </td>
                 </tr>
                 }
+                } @else if(!loading && paginatedTariffGroups && paginatedTariffGroups.items.length == 0) {
+                <tr>
+                    <td colspan="6" class="text-center pt-3 text-muted">No groups</td>
+                </tr>
+                }
             </tbody>
         </table>
     </div>
 </div>
 <app-pagination [pagination]="paginatedTariffGroups" (clickedPagination)="getTariffGroups({query: $event})"></app-pagination>
 
-<app-add-tariff [suburbList]="suburbAddSelectList" (tariffGroupAdded)="getTariffGroups({query: ''})" />
+<app-add-tariff
+    [suburbList]="suburbAddSelectList"
+    (tariffGroupAdded)="getTariffGroups({query: ''})" />
+
 <app-edit-tariff [tariffGroupSubject]="selectedTariffGroupSubject.asObservable()" (tariffGroupUpdated)="getTariffGroups({query: ''})" />
+<app-view-tariff-charges [tariffGroupSubject]="selectedTariffGroupSubject.asObservable()" />

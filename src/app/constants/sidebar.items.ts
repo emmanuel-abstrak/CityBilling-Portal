@@ -54,14 +54,20 @@ export const sidebarItems: NavItem[] = [
     },
     {
         label: 'Property Types',
-        icon: 'building',
+        icon: 'git-branch',
         link: '/settings/property-types',
         permissions: []
     },
     {
-        label: 'Tariffs',
+        label: 'Tariffs Groups',
         icon: 'report-money',
         link: '/settings/tariff-groups',
+        permissions: []
+    },
+    {
+        label: 'Tariff Services',
+        icon: 'list',
+        link: '/settings/services',
         permissions: []
     },
     {
@@ -74,18 +80,6 @@ export const sidebarItems: NavItem[] = [
         label: 'Portal Users',
         icon: 'users',
         link: '/settings/portal-users',
-        permissions: []
-    },
-    {
-        label: 'Tariff Services',
-        icon: 'list',
-        link: '/settings/services',
-        permissions: []
-    },
-    {
-        label: 'Water Pricing',
-        icon: 'droplet',
-        link: '/settings/water-pricing',
         permissions: []
     },
 ];

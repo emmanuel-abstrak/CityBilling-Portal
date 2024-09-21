@@ -1,1 +1,93 @@
-<p>property-types works!</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <form [formGroup]="searchForm" (ngSubmit)="doSearch()" class="search-filter d-flex align-items-center gap-3">
+        <div class="position-relative d-flex align-items-center">
+            <i class="ti ti-search position-absolute fw-bold me-n2 z-5 ms-2"></i>
+            <input type="text" formControlName="search" class="form-control form-control-sm ps-4" placeholder="Search by name" />
+        </div>
+        <button type="submit" [disabled]="loading" class="btn search-btn btn-sm px-3">Search</button>
+        @if(loading) {
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        }
+        @if(submitted && !loading) {
+        <button type="button" class="btn btn-link btn-sm px-0 text-danger" (click)="clearSearch()">Clear</button>
+        }
+    </form>
+    <div class="actions d-flex align-items-center gap-2">
+        <a data-bs-toggle="offcanvas" data-bs-target="#addPropertyTypeCanvas" aria-controls="addPropertyTypeCanvas" class="btn btn-primary btn-sm">Add Property Type</a>
+    </div>
+</div>
+
+<div class="card card-body {{ loading ? 'content-loading' : '' }} py-0">
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap mb-0">
+            <thead>
+                <tr class="text-muted fw-semibold">
+                    <th scope="col" class="ps-0">Name</th>
+                    <th scope="col">Price (USD)</th>
+                    <th scope="col">Cutoff (m<sup>3</sup>)</th>
+                    <th scope="col">Cutoff Price (USD)</th>
+                    <th scope="col">Properties</th>
+                    <th scope="col" class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top">
+                @if(paginatedTypes && paginatedTypes.items.length > 0) {
+                @for (type of paginatedTypes.items; track type) {
+                <tr>
+                    <td class="ps-0">
+                        <h6 class="fw-semibold mb-1">{{ type.name }}</h6>
+                    </td>
+                    <td>
+                        <span class="fw-semibold mb-1">{{ type.price }} <span class="text-muted">/ m<sup>3</sup></span></span>
+                    </td>
+                    <td>
+                        <span class="fw-semibold mb-1">{{ type.cutoff }}</span>
+                    </td>
+                    <td>
+                        <span class="fw-semibold mb-1">{{ type.cutoffPrice }} @if(type.cutoffPrice) { <span class="text-muted">/ m<sup>3</sup></span> }</span>
+                    </td>
+                    <td>
+                        <span class="fw-semibold mb-1">{{ type.properties }}</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-dots-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu" style>
+                                <li>
+                                    <a (click)="changeSelectedType(type)" data-bs-toggle="offcanvas" data-bs-target="#editPropertyTypeCanvas"
+                                        aria-controls="editPropertyTypeCanvas" class="dropdown-item d-flex align-items-center gap-2 border-bottom pointer">
+                                        <span>
+                                            <i class="ti ti-edit fs-4"></i>
+                                        </span>Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a (click)="showConfirmDelete(type)" class="dropdown-item d-flex align-items-center text-danger gap-2 pointer">
+                                        <span>
+                                            <i class="ti ti-trash fs-4"></i>
+                                        </span>Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+                } @else if(!loading && paginatedTypes && paginatedTypes.items.length == 0) {
+                <tr>
+                    <td colspan="6" class="text-center pt-3 text-muted">No property types</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-pagination [pagination]="paginatedTypes" (clickedPagination)="getPropertyTypes({query: $event})"></app-pagination>
+
+<app-add-property-type (typeAdded)="getPropertyTypes({query: ''})" />
+<app-edit-property-type [typeSubject]="selectedTypeSubject.asObservable()" (typeUpdated)="getPropertyTypes({query: ''})" />

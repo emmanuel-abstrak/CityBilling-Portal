@@ -3,18 +3,21 @@ import { User } from "./user.model";
 
 export interface Property {
     id: number;
-    type: string;
     size: number;
     meter: number;
     address: string;
-    ratesCharge: number;
-    refuseCharge: number;
-    sewerCharge: number;
     balances: {
-        rates: number,
-        sewer: number,
-        refuse: number,
+        name: string;
+        amount: number;
+    }[];
+    type: {
+        id: number;
+        name: string;
     };
+    tariffs: {
+        name: string;
+        price: string;
+    }[];
     owner: User;
     suburb: Suburb;
     createdAt: string;

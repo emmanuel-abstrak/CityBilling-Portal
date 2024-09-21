@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://api.billing.local/api',
-    tokenStorageKey: "msvg_token",
-    userStorageKey: "msvg_user",
+    apiUrl: 'https://api-masvingo.privateutilityzim.com/api',
+    tokenStorageKey: "msvg_prd_token",
+    userStorageKey: "msvg_prd_user",
 };

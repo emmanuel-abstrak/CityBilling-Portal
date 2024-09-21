@@ -4,21 +4,15 @@ import {
     HttpHandler,
     HttpEvent,
     HttpErrorResponse,
-    HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
     catchError,
     Observable,
-    switchMap,
     throwError,
-    finalize,
     Subject,
-    filter,
-    tap,
     EMPTY,
 } from 'rxjs';
-import { AuthService } from '@services/api/auth.service';
 import { AuthState } from '@states/auth.state';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';

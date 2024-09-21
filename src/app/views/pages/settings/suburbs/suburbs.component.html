@@ -21,7 +21,7 @@
 
 <div class="card card-body {{ loading ? 'content-loading' : '' }} py-0">
     <div class="table-responsive">
-        <table class="table align-middle text-nowrap mb-3">
+        <table class="table align-middle text-nowrap mb-0">
             <thead>
                 <tr class="text-muted fw-semibold">
                     <th scope="col" class="ps-0">Name</th>
@@ -31,6 +31,7 @@
                 </tr>
             </thead>
             <tbody class="border-top">
+                @if(paginatedSuburbs && paginatedSuburbs.items.length > 0) {
                 @for (suburb of paginatedSuburbs.items; track suburb) {
                 <tr>
                     <td class="ps-0">
@@ -66,6 +67,11 @@
                             </ul>
                         </div>
                     </td>
+                </tr>
+                }
+                } @else if(!loading && paginatedSuburbs && paginatedSuburbs.items.length == 0) {
+                <tr>
+                    <td colspan="6" class="text-center pt-3 text-muted">No suburbs</td>
                 </tr>
                 }
             </tbody>

@@ -38,9 +38,7 @@ export class SuburbsComponent {
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(data => {
-            this.paginatedSuburbs = data['suburbState'];
-        });
+        this.getSuburbs({});
 
         this.searchForm = this.fb.group({
             search: [''],
@@ -81,7 +79,7 @@ export class SuburbsComponent {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.getSuburbs({ query: '' });
+                this.paginatedSuburbs.items = this.paginatedSuburbs.items.filter((s: Suburb) => s.id != suburb.id);
             }
         });
     }

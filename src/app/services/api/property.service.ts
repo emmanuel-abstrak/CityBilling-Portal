@@ -42,7 +42,7 @@ export class PropertyService {
             id_number,
             address,
             suburb_id,
-            type,
+            type_id: type,
             size,
             meter,
             send_notification: sendNotification
@@ -75,7 +75,7 @@ export class PropertyService {
             id_number,
             address,
             suburb_id,
-            type,
+            type_id: type,
             size,
             meter,
         }).pipe(

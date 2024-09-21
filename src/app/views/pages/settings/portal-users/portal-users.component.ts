@@ -48,15 +48,12 @@ export class PortalUsersComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private activatedRoute: ActivatedRoute,
         private portalUserService: PortalUserService,
         private toastService: ToastrService
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(data => {
-            this.paginatedUsers = data['usersState'];
-        });
+        this.getUsers({});
 
         this.searchForm = this.fb.group({
             search: [''],
@@ -137,7 +134,7 @@ export class PortalUsersComponent implements OnInit {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                this.getUsers({ query: '' });
+                this.paginatedUsers.items = this.paginatedUsers.items.filter((u: User) => u.id != user.id);
             }
         });
     }

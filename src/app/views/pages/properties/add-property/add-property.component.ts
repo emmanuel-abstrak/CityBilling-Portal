@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PropertyTypeSelect } from '@models/property-type.model';
 import { SuburbSelect } from '@models/suburb.model';
 import { PropertyService } from '@services/api/property.service';
 import { Select2Module } from 'ng-select2-component';
@@ -15,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AddPropertyComponent {
     @Output() propertyAdded = new EventEmitter<boolean>();
     @Input() suburbList: SuburbSelect[];
+    @Input() typesList: PropertyTypeSelect[];
     public loading: boolean = false;
     public submitted: boolean = false;
     public selectedSuburb = null;
@@ -33,17 +35,7 @@ export class AddPropertyComponent {
         propertyMeter: new FormControl(''),
         sendNotification: new FormControl(''),
     });
-
-    public typesList = [
-        {
-            value: 'residential',
-            label: 'Residential'
-        },
-        {
-            value: 'commercial',
-            label: 'Commercial'
-        },
-    ];
+    
     constructor(private fb: FormBuilder, private propertyService: PropertyService, private toastService: ToastrService) { }
 
     ngOnInit(): void {

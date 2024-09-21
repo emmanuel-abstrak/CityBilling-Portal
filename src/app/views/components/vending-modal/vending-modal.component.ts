@@ -35,9 +35,9 @@ export class VendingModalComponent {
         this.eventsSubscription = this.propertySubject.subscribe((property) => {
             this.property = property;
             this.vendForm = this.fb.group({
-                rates: [property.balances.rates, [Validators.required]],
-                refuse: [property.balances.refuse, [Validators.required]],
-                sewer: [property.balances.sewer, [Validators.required]]
+                // rates: [property.balances.rates, [Validators.required]],
+                // refuse: [property.balances.refuse, [Validators.required]],
+                // sewer: [property.balances.sewer, [Validators.required]]
             });
         });
     }

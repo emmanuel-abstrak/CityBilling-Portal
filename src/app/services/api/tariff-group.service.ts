@@ -25,23 +25,13 @@ export class TariffGroupService {
         suburb: number,
         minSize: number,
         maxSize: number,
-        residentialRatesCharge: number,
-        residentialRefuseCharge: number,
-        residentialSewerageCharge: number,
-        commercialRatesCharge: number,
-        commercialRefuseCharge: number,
-        commercialSewerageCharge: number,
+        tariffs: any
     ): Observable<TariffGroup> {
         return this.http.post(`${environment.apiUrl}/tariff-groups`, {
             suburb_id: suburb,
             min_size: minSize,
             max_size: maxSize,
-            residential_rates_charge: residentialRatesCharge,
-            residential_refuse_charge: residentialRefuseCharge,
-            residential_sewerage_charge: residentialSewerageCharge,
-            commercial_rates_charge: commercialRatesCharge,
-            commercial_refuse_charge: commercialRefuseCharge,
-            commercial_sewerage_charge: commercialSewerageCharge,
+            tariffs
         }).pipe(
             map((response) => {
                 const tariff: TariffGroup = (<any>response).result;
