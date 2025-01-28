@@ -61,6 +61,7 @@ export class EditPropertyComponent {
                 propertySize: [property.size, [Validators.required, Validators.min(1)]],
                 propertyMeter: [property.meter, [Validators.required, Validators.pattern('[0-9]*')]],
                 propertyDebt: [property.debt],
+                propertyRepayment: [property.repayment],
             });
         });
     }
@@ -97,6 +98,7 @@ export class EditPropertyComponent {
             this.f['propertySize'].value,
             this.f['propertyMeter'].value,
             this.f['propertyDebt'].value,
+            this.f['propertyRepayment'].value,
         ).subscribe({
             next: (value: Property) => {
                 this.toastService.success('Property updated');

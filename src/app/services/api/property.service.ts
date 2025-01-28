@@ -33,6 +33,7 @@ export class PropertyService {
         size: number,
         meter: number,
         debt: number,
+        repayment: number,
         sendNotification: boolean
     ): Observable<Property> {
         return this.http.post(`${environment.apiUrl}/properties`, {
@@ -47,6 +48,7 @@ export class PropertyService {
             size,
             meter,
             debt,
+            repayment,
             send_notification: sendNotification
         }).pipe(
             map((response) => {
@@ -69,6 +71,7 @@ export class PropertyService {
         size: number,
         meter: number,
         debt: number,
+        repayment: number,
     ): Observable<Property> {
         return this.http.put(`${environment.apiUrl}/properties/${id}`, {
             first_name,
@@ -82,6 +85,7 @@ export class PropertyService {
             size,
             meter,
             debt,
+            repayment,
         }).pipe(
             map((response) => {
                 const property: Property = (<any>response).result;

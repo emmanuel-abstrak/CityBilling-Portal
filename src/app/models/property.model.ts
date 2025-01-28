@@ -21,6 +21,7 @@ export interface Property {
     owner: User;
     suburb: Suburb;
     debt: number;
+    repayment: number;
     createdAt: string;
     updatedAt: string;
 }

@@ -52,6 +52,7 @@ export class AddPropertyComponent {
             propertySize: ['', [Validators.required, Validators.min(1)]],
             propertyMeter: ['', [Validators.required, Validators.pattern('[0-9]*')]],
             propertyDebt: [''],
+            propertyRepayment: [''],
             sendNotification: [true],
         });
     }
@@ -88,6 +89,7 @@ export class AddPropertyComponent {
             this.f['propertySize'].value,
             this.f['propertyMeter'].value,
             this.f['propertyDebt'].value,
+            this.f['propertyRepayment'].value,
             this.f['sendNotification'].value,
         ).subscribe({
             next: () => {

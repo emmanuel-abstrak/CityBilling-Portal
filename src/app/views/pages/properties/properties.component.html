@@ -30,6 +30,7 @@
                     <th scope="col">Location</th>
                     <th scope="col">Size (<span>m<sup>2</sup></span>)</th>
                     <th scope="col">Debt</th>
+                    <th scope="col">Repayment</th>
                     <th scope="col">Tariffs (USD)</th>
                     <th scope="col">Arrears (USD)</th>
                     <th scope="col" class="text-end">Actions</th>
@@ -69,6 +70,9 @@
                     </td>
                     <td>
                         {{ property.debt }}
+                    </td>
+                    <td>
+                        {{ property.repayment }}
                     </td>
                     <td>
                         @for (tariff of property.tariffs; track tariff) {
