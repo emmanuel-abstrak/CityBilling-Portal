@@ -51,7 +51,7 @@ export class AddPropertyComponent {
             propertyType: ['', [Validators.required]],
             propertySize: ['', [Validators.required, Validators.min(1)]],
             propertyMeter: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-            propertyDebt: ['', Validators.pattern('^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$')],
+            propertyDebt: [''],
             sendNotification: [true],
         });
     }

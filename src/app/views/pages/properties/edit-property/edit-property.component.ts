@@ -60,7 +60,7 @@ export class EditPropertyComponent {
                 propertyType: [property.type.id, [Validators.required]],
                 propertySize: [property.size, [Validators.required, Validators.min(1)]],
                 propertyMeter: [property.meter, [Validators.required, Validators.pattern('[0-9]*')]],
-                propertyDebt: [property.debt, Validators.pattern('^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$')],
+                propertyDebt: [property.debt],
             });
         });
     }
