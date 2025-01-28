@@ -39,6 +39,7 @@ export class EditPropertyComponent {
         propertySize: new FormControl(''),
         propertyMeter: new FormControl(''),
         propertyDebt: new FormControl(''),
+        propertyRepayment: new FormControl(''),
     });
 
     constructor(private fb: FormBuilder, private propertyService: PropertyService, private toastService: ToastrService) { }

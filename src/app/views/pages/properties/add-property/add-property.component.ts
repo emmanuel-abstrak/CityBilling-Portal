@@ -34,6 +34,7 @@ export class AddPropertyComponent {
         propertySize: new FormControl(''),
         propertyMeter: new FormControl(''),
         propertyDebt: new FormControl(''),
+        propertyRepayment: new FormControl(''),
         sendNotification: new FormControl(''),
     });
 
