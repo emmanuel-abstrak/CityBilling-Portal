@@ -33,9 +33,10 @@ export class AddPropertyComponent {
         propertyType: new FormControl(''),
         propertySize: new FormControl(''),
         propertyMeter: new FormControl(''),
+        propertyDebt: new FormControl(''),
         sendNotification: new FormControl(''),
     });
-    
+
     constructor(private fb: FormBuilder, private propertyService: PropertyService, private toastService: ToastrService) { }
 
     ngOnInit(): void {
@@ -44,17 +45,18 @@ export class AddPropertyComponent {
             ownerLastName: ['', [Validators.required]],
             ownerEmail: ['', [Validators.required, Validators.email]],
             ownerPhoneNumber: ['', [Validators.required, Validators.pattern('^0[0-9]{9}$')]],
-            ownerId: ['', [Validators.required, Validators.pattern('^[1-9]{2}-[1-9]{6}[A-Z][1-9]{2}$')]],
+            ownerId: ['', [Validators.required, Validators.pattern('^[1-9]{2}-[1-9]{6}[A-Z]-[1-9]{2}$')]],
             propertyStreetAddress: ['', [Validators.required]],
             propertySuburb: ['', [Validators.required]],
             propertyType: ['', [Validators.required]],
             propertySize: ['', [Validators.required, Validators.min(1)]],
             propertyMeter: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+            propertyDebt: ['', Validators.pattern('[1-9]*')],
             sendNotification: [true],
         });
     }
 
-    get f(): { [key: string]: AbstractControl } {
+    get f(): { [key: string]: AbstractControl; } {
         return this.addForm.controls;
     }
 
@@ -85,6 +87,7 @@ export class AddPropertyComponent {
             this.f['propertyType'].value,
             this.f['propertySize'].value,
             this.f['propertyMeter'].value,
+            this.f['propertyDebt'].value,
             this.f['sendNotification'].value,
         ).subscribe({
             next: () => {

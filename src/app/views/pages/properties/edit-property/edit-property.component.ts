@@ -38,6 +38,7 @@ export class EditPropertyComponent {
         propertyType: new FormControl(''),
         propertySize: new FormControl(''),
         propertyMeter: new FormControl(''),
+        propertyDebt: new FormControl(''),
     });
 
     constructor(private fb: FormBuilder, private propertyService: PropertyService, private toastService: ToastrService) { }
@@ -53,17 +54,18 @@ export class EditPropertyComponent {
                 ownerLastName: [property.owner.lastName, [Validators.required]],
                 ownerEmail: [property.owner.email, [Validators.required, Validators.email]],
                 ownerPhoneNumber: [property.owner.phoneNumber, [Validators.required, Validators.pattern('^0[0-9]{9}$')]],
-                ownerId: [property.owner.idNumber, [Validators.required, Validators.pattern('^[1-9]{2}-[1-9]{6}[A-Z][1-9]{2}$')]],
+                ownerId: [property.owner.idNumber, [Validators.required, Validators.pattern('^[1-9]{2}-[1-9]{6}[A-Z]-[1-9]{2}$')]],
                 propertyStreetAddress: [property.address, [Validators.required]],
                 propertySuburb: [property.suburb.id, [Validators.required]],
                 propertyType: [property.type.id, [Validators.required]],
                 propertySize: [property.size, [Validators.required, Validators.min(1)]],
-                propertyMeter: [property.meter, [Validators.required, Validators.pattern('[0-9]*')]]
+                propertyMeter: [property.meter, [Validators.required, Validators.pattern('[0-9]*')]],
+                propertyDebt: [property.debt, Validators.pattern('[1-9]*')],
             });
         });
     }
 
-    get f(): { [key: string]: AbstractControl } {
+    get f(): { [key: string]: AbstractControl; } {
         return this.editForm.controls;
     }
 
@@ -94,6 +96,7 @@ export class EditPropertyComponent {
             this.f['propertyType'].value,
             this.f['propertySize'].value,
             this.f['propertyMeter'].value,
+            this.f['propertyDebt'].value,
         ).subscribe({
             next: (value: Property) => {
                 this.toastService.success('Property updated');

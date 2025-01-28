@@ -20,6 +20,7 @@ export interface Property {
     }[];
     owner: User;
     suburb: Suburb;
+    debt: number;
     createdAt: string;
     updatedAt: string;
 }
